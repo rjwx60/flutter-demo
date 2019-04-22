@@ -9,6 +9,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'First Flutter App',
+      theme: new ThemeData(
+        // 控制主题色
+        primaryColor: Colors.white
+      ),
       home: new RandomWords(),
     );
   }
@@ -31,6 +35,7 @@ class RandomWordsState extends State<RandomWords> {
     Navigator.of(context).push(
       new MaterialPageRoute<void>(
         builder: (BuildContext context) {
+          // 遍历数据
           final Iterable<ListTile> tiles = _saved.map((WordPair pair) {
             return new ListTile(
               title: new Text(
@@ -39,11 +44,13 @@ class RandomWordsState extends State<RandomWords> {
               ),
             );
           });
+          // 组合 List
           final List<Widget> divied = ListTile.divideTiles(
             context: context,
             tiles: tiles
           ).toList();
           
+          // 构建视图
           return new Scaffold(
             appBar: new AppBar(
               title: const Text('Favorite Suggestion'),
@@ -114,3 +121,8 @@ class RandomWordsState extends State<RandomWords> {
   }
 }
 
+// 写了 Dart 代码
+// 使用热重载加速了开发进程
+// 实现了一个 stateful widget，为你的应用加入了交互功能
+// 创建了一个新的页面（route），为主页和这个新页面的跳转加入了逻辑
+// 学会了如何使用 themes 修改应用的 UI
