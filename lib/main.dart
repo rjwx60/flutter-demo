@@ -26,6 +26,35 @@ class RandomWordsState extends State<RandomWords> {
   final Set<WordPair> _saved = new Set<WordPair>();
   final TextStyle _biggerFont = const TextStyle(fontSize: 18.0);
 
+  void _pushSaved() {
+    // 跳转收藏页面
+    Navigator.of(context).push(
+      new MaterialPageRoute<void>(
+        builder: (BuildContext context) {
+          final Iterable<ListTile> tiles = _saved.map((WordPair pair) {
+            return new ListTile(
+              title: new Text(
+                pair.asPascalCase,
+                style: _biggerFont,
+              ),
+            );
+          });
+          final List<Widget> divied = ListTile.divideTiles(
+            context: context,
+            tiles: tiles
+          ).toList();
+          
+          return new Scaffold(
+            appBar: new AppBar(
+              title: const Text('Favorite Suggestion'),
+            ),
+            body: new ListView(children: divied),
+          );
+        }
+      ),
+    );
+  }
+
   Widget _buildSuggestions() {
     return new ListView.builder(
       padding: const EdgeInsets.all(16.0),
@@ -75,6 +104,10 @@ class RandomWordsState extends State<RandomWords> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('emmm'),
+        // 新增tab
+        actions: <Widget>[
+          new IconButton(icon: const Icon(Icons.list), onPressed: _pushSaved,)
+        ],
       ),
       body: _buildSuggestions(),
     );
